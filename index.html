@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Vue JS</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+    <div id="app" class="py-4">
+        <h1 class="text-xl">{{ msg }}</h1>
+        <a v-bind:href="url">Ouvrir vuejs fr</a> <br>
+        <button :class="couleur" class="p-2 bg-green-500 text-white shadow-md m-2 rounded-md"  v-on:click="alerter">Test methode</button> <br>
+        <button v-on:click="toggleColor" class="p-2 mx-2 bg-gray-300">change color</button>
+        <img :src="url_img" alt="text" width="200" height="50" >
+        <h1 class="text-center my-2 p-4 border-b-2 border-red-400">Compteur : {{compteur}}</h1>
+        <h1 class="text-center my-1 p-2"> 
+            <span class="p-1 text-xl mr-2 bg-green-200 cursor-pointer select-none" v-on:click="compteur++">+</span>
+            <span class="p-1 text-xl ml-2 bg-red-300 cursor-pointer select-none" v-on:click="compteur == 0 ? compteur =0 : compteur--">-</span>
+        </h1>
+        <canvas v-on:mousemove="cords" class="border-4 h-16">
+        </canvas>
+        <p>
+            X : {{x}}
+            Y : {{y}}
+        </p>
+        <h1 class="text-3xl text-center">Les events modifiers</h1>
+        <ul class="bg-gray-100 inline">
+            <li>une seule fois  v-on:click.once </li>
+            <li>bumbling propagation v-on:click.stop </li>
+            <li>prevent default : v-on:click.prevent </li>
+        </ul>
+        <h1 class="text-3xl text-center">Les keys modifiers</h1>
+        <label for="Nom">Nom : </label>
+        <input type="text" v-model="name" name="name" v-on:click.esc="vider" v-on:keyup.enter="valider" class="border-b-2 outline-none " id="name">
+        <label for="Nom">Prenom : </label>
+        <input type="text" v-model="prenom" name="prenom" v-on:click.esc="vider" v-on:keyup.enter="valider" class="border-b-2 outline-none " id="prenom">
+        <p>
+            Vous etes : 
+        </p>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el :"#app",
+        data : {
+            msg : "use VUE JS",
+            name : '',
+            compteur: 0,
+            y : 0,
+            x: 0,
+            url : 'https://fr.vuejs.org/v2/guide/installation.html',
+            couleur : ' bg-green-500',
+            url_img : 'https://images.unsplash.com/photo-1649033648788-943285780c56?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
+        },
+        methods : {
+            alerter : function (){
+                alert(this.msg);
+            },
+            valider : function (){
+                if(this.name == '' || this.name.length <= 2 ){
+                    alert('veuillez entrer un nom valide');
+                }
+            }
+            ,
+            toggleColor : function (){
+                this.couleur =  this.couleur == 'bg-red-500' ? 'bg-green-500' : 'bg-red-500'
+            },
+            cords : function (event){
+                console.log(event);
+                this.x = event.offsetX;
+                this.y = event.offsetY;
+            },
+            vider: function (){
+                this.name = '' 
+            }
+        }
+    })
+</script>
+</html>
